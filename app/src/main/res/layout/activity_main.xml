@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableRight="@android:drawable/ic_menu_search"
-            android:drawableTint="@color/accent"
+            android:background="#0000000"
             android:ems="10"
             android:hint="Location"
             android:imeOptions="actionSearch"
