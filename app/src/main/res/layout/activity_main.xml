@@ -9,26 +9,19 @@
     tools:context=".MainActivity"
     android:padding="15dp">
 
-    <LinearLayout
+    <EditText
+        android:padding="10dp"
+        android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableRight="@android:drawable/ic_menu_search"
         android:background="@drawable/search_bg"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableRight="@android:drawable/ic_menu_search"
-            android:background="#0000000"
-            android:ems="10"
-            android:hint="Location"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:textColor="@color/primary_text"
-            android:textColorHint="@color/secondary_text" />
-    </LinearLayout>
+        android:ems="10"
+        android:hint="Location"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:textColor="@color/primary_text"
+        android:textColorHint="@color/secondary_text" />
 
     <TextView
         android:id="@+id/textView"
