@@ -27,6 +27,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
     LocationManager locationManager;
     LocationListener locationListener;
+
+    private FusedLocationProviderClient mFusedLocationClient;
 
     Location userCurrentLocation;
 
@@ -235,6 +241,8 @@ public class MainActivity extends AppCompatActivity {
         weatherImage = findViewById(R.id.iconBackButton);
         searchImage = findViewById(R.id.iconSearchEditText);
 
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
 //        location.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
@@ -270,10 +278,22 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         } else {
-            if (locationManager != null) {
-                userCurrentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                currentWeather(userCurrentLocation);
-            }
+//            if (locationManager != null) {
+//                userCurrentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//                currentWeather(userCurrentLocation);
+//            }
+
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                currentWeather(location);
+                                // Logic to handle location object
+                            }
+                        }
+                    });
         }
 
 
@@ -295,11 +315,23 @@ public class MainActivity extends AppCompatActivity {
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
-            userCurrentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            if (userCurrentLocation != null) {
-                Log.i("Location", userCurrentLocation.toString());
-                currentWeather(userCurrentLocation);
-            }
+
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                currentWeather(location);
+                                // Logic to handle location object
+                            }
+                        }
+                    });
+//            userCurrentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//            if (userCurrentLocation != null) {
+//                Log.i("Location", userCurrentLocation.toString());
+//                currentWeather(userCurrentLocation);
+//            }
         }
     }
 
