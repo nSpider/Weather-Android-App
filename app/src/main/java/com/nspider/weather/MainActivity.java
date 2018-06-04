@@ -21,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -53,6 +54,12 @@ public class MainActivity extends AppCompatActivity {
     LocationListener locationListener;
 
     Location userCurrentLocation;
+
+    TextView searchTextView;
+    ImageView weatherImage;
+    ImageView searchImage;
+
+    boolean inputState = false;
 
     public class IconDownloader extends AsyncTask<String, Void, Bitmap> {
 
@@ -138,15 +145,76 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("Temp", weather);
                 temp.setText(String.valueOf((int) tempC));
                 feels.setText("Feels like " + current.getInt("feelslike_c") + "\u00b0C");
-                tv.setText("Weather at " + loc);
+                tv.setVisibility(View.INVISIBLE);
+                //tv.setText("Weather at " + loc);
+                searchTextView.setText(loc);
+                backToViewState();
                 Log.i("Condition", condition.getString("icon"));
                 text.setText(condition.getString("text"));
                 iconDownloader = new IconDownloader();
                 iconDownloader.execute(condition.getString("icon"));
             } catch (JSONException e) {
+                tv.setVisibility(View.VISIBLE);
                 tv.setText("Location not Found !!");
+                backToViewState();
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void back (View view){
+
+        if (inputState){
+
+            location.setText("");
+            backToViewState();
+
+        } else {
+
+            search(view);
+
+        }
+
+    }
+
+    private void backToViewState() {
+
+        weatherImage.setImageResource(R.drawable.ic_weather);
+        searchTextView.setVisibility(View.VISIBLE);
+        searchImage.setImageResource(R.drawable.ic_search);
+        location.setVisibility(View.GONE);
+        inputState = false;
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(location.getWindowToken(),0);
+        }
+    }
+
+    public void clear (View view) {
+
+        if (inputState) {
+
+            location.setText("");
+
+        } else {
+
+            search(view);
+
+        }
+
+    }
+
+    public void search (View view) {
+
+        weatherImage.setImageResource(R.drawable.ic_back);
+        searchTextView.setVisibility(View.GONE);
+        searchImage.setImageResource(R.drawable.ic_close);
+        location.setVisibility(View.VISIBLE);
+        inputState = true;
+        location.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.showSoftInput(location, 0);
         }
     }
 
@@ -162,6 +230,9 @@ public class MainActivity extends AppCompatActivity {
         icon = findViewById(R.id.icon);
         feels = findViewById(R.id.feels);
         text = findViewById(R.id.text);
+        searchTextView = findViewById(R.id.searchTextView);
+        weatherImage = findViewById(R.id.iconBackButton);
+        searchImage = findViewById(R.id.iconSearchEditText);
 
 //        location.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
@@ -224,8 +295,10 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             userCurrentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            Log.i("Location",userCurrentLocation.toString());
-            currentWeather(userCurrentLocation);
+            if (userCurrentLocation != null) {
+                Log.i("Location", userCurrentLocation.toString());
+                currentWeather(userCurrentLocation);
+            }
         }
     }
 
