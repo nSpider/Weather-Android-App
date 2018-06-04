@@ -3,6 +3,7 @@ package com.nspider.weather;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -305,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
     public void currentWeather (Location loc){
         try {
             getWeather = new GetWeather();
-            getWeather.execute("http://api.apixu.com/v1/current.json?key="+ R.string.key +"&q="+ loc.getLatitude() + "," + loc.getLongitude());
+            getWeather.execute("http://api.apixu.com/v1/current.json?key="+ getResources().getString(R.string.key) +"&q="+ loc.getLatitude() + "," + loc.getLongitude());
             Log.i("location",loc.getLatitude() + "," + loc.getLongitude());
         } catch (Exception e) {
             e.printStackTrace();
@@ -321,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
             }
             loc = URLEncoder.encode(location.getText().toString(),"UTF-8");
             getWeather = new GetWeather();
-            getWeather.execute("http://api.apixu.com/v1/current.json?key="+ R.string.key +"&q="+loc);
+            getWeather.execute("http://api.apixu.com/v1/current.json?key="+ getResources().getString(R.string.key) +"&q="+loc);
             Log.i("location",loc);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
