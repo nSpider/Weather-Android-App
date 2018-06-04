@@ -163,21 +163,21 @@ public class MainActivity extends AppCompatActivity {
         feels = findViewById(R.id.feels);
         text = findViewById(R.id.text);
 
-        location.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_RIGHT = 2;
-
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (location.getRight() - location.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        // your action here
-                        performSearch();
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
+//        location.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                final int DRAWABLE_RIGHT = 2;
+//
+//                if (event.getAction() == MotionEvent.ACTION_UP) {
+//                    if (event.getRawX() >= (location.getRight() - location.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+//                        // your action here
+//                        performSearch();
+//                        return true;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
 
         location.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
