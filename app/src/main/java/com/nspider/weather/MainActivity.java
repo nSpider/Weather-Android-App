@@ -305,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
     public void currentWeather (Location loc){
         try {
             getWeather = new GetWeather();
-            getWeather.execute("http://api.apixu.com/v1/current.json?key=9d35752f841541c7b3f165914181005&q="+ loc.getLatitude() + "," + loc.getLongitude());
+            getWeather.execute("http://api.apixu.com/v1/current.json?key="+ R.string.key +"&q="+ loc.getLatitude() + "," + loc.getLongitude());
             Log.i("location",loc.getLatitude() + "," + loc.getLongitude());
         } catch (Exception e) {
             e.printStackTrace();
@@ -321,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
             }
             loc = URLEncoder.encode(location.getText().toString(),"UTF-8");
             getWeather = new GetWeather();
-            getWeather.execute("http://api.apixu.com/v1/current.json?key=9d35752f841541c7b3f165914181005&q="+loc);
+            getWeather.execute("http://api.apixu.com/v1/current.json?key="+ R.string.key +"&q="+loc);
             Log.i("location",loc);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
