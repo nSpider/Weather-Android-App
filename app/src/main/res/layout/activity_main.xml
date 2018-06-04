@@ -18,10 +18,12 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
 
             <ImageView
-                android:id="@+id/iconBackEditText"
+                android:id="@+id/iconBackButton"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_margin="10dp"
@@ -37,17 +39,17 @@
                 android:textSize="18sp"
                 android:padding="10dp"
                 android:text="Enter Location"
-                android:layout_toEndOf="@+id/iconBackEditText"
+                android:layout_toEndOf="@+id/iconBackButton"
                 android:layout_toLeftOf="@id/iconSearchEditText"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:visibility="invisible"/>
 
             <EditText
                 android:id="@+id/editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="50dp"
-                android:layout_toEndOf="@+id/iconBackEditText"
-                android:layout_toLeftOf="@id/iconSearchEditText"
+                android:layout_toEndOf="@+id/iconBackButton"
                 android:background="#FFFFFF"
                 android:ems="10"
                 android:hint="Enter Location"
